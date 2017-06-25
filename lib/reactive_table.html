@@ -69,13 +69,27 @@
         </thead>
         <tbody>
           {{#each sortedRows}}
-            <tr class="{{../rowClass this}}">
+            <tr class="{{../rowClass this}}" id="row-{{this._id}}" data-closed="false">
               {{#each ../fields}}
                 {{#if isVisible}}
-                  <td class="{{getCellClass ..}}">{{#if tmpl}}{{#with ..}}{{> ../tmpl}}{{/with}}{{else}}{{getField ..}}{{/if}}</td>
+                  <td class="{{getCellClass ..}}">
+                    {{#unless @index}}
+                      {{#if ../children}}
+                        <span class="js-toggle-node fa fa-caret-down"></span>
+                      {{/if}}
+                    {{/unless}}
+                    {{#if tmpl}}{{#with ..}}{{> ../tmpl}}{{/with}}{{else}}{{getField ..}}{{/if}}
+                  </td>
                 {{/if}}
               {{/each}}
             </tr>
+            {{#each this.children}}
+                <tr class="{{../../rowClass this}} child" id="row-{{this._id}}">
+                  {{#each ../../fields}}
+                      <td class="{{getCellClass ../../..}}">{{#if tmpl}}{{#with ..}}{{> ../tmpl}}{{/with}}{{else}}{{getField ../../..}}{{/if}}</td>
+                  {{/each}}
+                </tr>
+            {{/each}}
           {{/each}}
         </tbody>
       </table>
