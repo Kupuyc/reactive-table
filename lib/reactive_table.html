@@ -90,6 +90,10 @@
                   {{/each}}
                 </tr>
             {{/each}}
+          {{else}}
+              <tr>
+                  <td colspan="{{fields.length}}" class="emptyMessage">{{emptyMessage}}</td>
+              </tr>
           {{/each}}
         </tbody>
       </table>
