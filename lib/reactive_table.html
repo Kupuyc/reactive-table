@@ -69,13 +69,13 @@
         </thead>
         <tbody>
           {{#each sortedRows}}
-            <tr class="{{../rowClass this}}" id="row-{{this._id}}" data-closed="false">
+            <tr class="{{../rowClass this}}" id="row-{{this._id}}" data-closed="{{../isChildrenClosed}}">
               {{#each ../fields}}
                 {{#if isVisible}}
                   <td class="{{getCellClass ..}}">
                     {{#unless @index}}
                       {{#if ../children}}
-                        <span class="js-toggle-node fa fa-caret-down"></span>
+                        <span class="js-toggle-node fa {{#if ../../isChildrenClosed}}fa-caret-right{{else}}fa-caret-down{{/if}}"></span>
                       {{/if}}
                     {{/unless}}
                     {{#if tmpl}}{{#with ..}}{{> ../tmpl}}{{/with}}{{else}}{{getField ..}}{{/if}}
@@ -84,10 +84,14 @@
               {{/each}}
             </tr>
             {{#each this.children}}
-                <tr class="{{../../rowClass this}} child" id="row-{{this._id}}">
-                  {{#each ../../fields}}
+                <tr class="{{../../rowClass this}} child {{#if ../../isChildrenClosed}}hidden{{/if}}" id="row-{{this._id}}">
+                  {{#if ../../childrenTemplateName}}
+                    {{> Template.dynamic template = ../../childrenTemplateName data = (object child = this parent = ..)}}
+                  {{else}}
+                    {{#each ../../fields}}
                       <td class="{{getCellClass ../../..}}">{{#if tmpl}}{{#with ..}}{{> ../tmpl}}{{/with}}{{else}}{{getField ../../..}}{{/if}}</td>
-                  {{/each}}
+                    {{/each}}
+                  {{/if}}
                 </tr>
             {{/each}}
           {{else}}
