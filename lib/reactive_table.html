@@ -94,6 +94,11 @@
                   {{/if}}
                 </tr>
             {{/each}}
+            {{#if ../childrenFooterTemplateName}}
+              <tr class="child {{#if ../isChildrenClosed}}hidden{{/if}}" id="row-{{this._id}}">
+                {{> Template.dynamic template = ../childrenFooterTemplateName data = (object data = this)}}
+              </tr>
+            {{/if}}
           {{else}}
               <tr>
                   <td colspan="{{fields.length}}" class="emptyMessage">{{emptyMessage}}</td>
