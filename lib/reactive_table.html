@@ -84,6 +84,7 @@
               {{/each}}
             </tr>
             {{#each this.children}}
+              {{#if this}}
                 <tr class="{{../../rowClass this}} child {{#if ../../isChildrenClosed}}hidden{{/if}}" id="row-{{this._id}}">
                   {{#if ../../childrenTemplateName}}
                     {{> Template.dynamic template = ../../childrenTemplateName data = (object child = this parent = ..)}}
@@ -93,6 +94,7 @@
                     {{/each}}
                   {{/if}}
                 </tr>
+              {{/if}}
             {{/each}}
             {{#if ../childrenFooterTemplateName}}
               <tr class="child {{#if ../isChildrenClosed}}hidden{{/if}}" id="row-{{this._id}}">
